@@ -65,3 +65,7 @@ body {
 .type-Input:focus {
   border-color: black;
 }
+
+.correct {
+  color: green;
+}

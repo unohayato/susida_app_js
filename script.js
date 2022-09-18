@@ -14,7 +14,18 @@ async function RenderNextSentence() {
   const sentence = await GetRandomSentence();
   console.log(sentence);
 
-  typeDisplay.innerText = sentence;
+  typeDisplay.innerText = "";
+  /*文章を一文字ずつ分解して、spanタグを生成*/
+  let oneText = sentence.split("");
+  oneText.forEach((character) => {
+    const characterSpan = document.createElement("span");
+    characterSpan.innerText = character;
+    //console.log(characterSpan);
+    typeDisplay.appendChild(characterSpan);
+    characterSpan.classList.add("correct");
+  });
+    
+
 };
 
 RenderNextSentence();
