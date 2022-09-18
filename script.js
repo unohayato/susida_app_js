@@ -1,4 +1,5 @@
 const RANDOM_SENTENCE_URL_API = "https://api.quotable.io/random";
+const typeDisplay = document.getElementById("typeDisplay");
 
 /*非同期処理でランダムに文章を取ってくる*/
 function GetRandomSentence() {
@@ -12,6 +13,8 @@ function GetRandomSentence() {
 async function RenderNextSentence() {
   const sentence = await GetRandomSentence();
   console.log(sentence);
+
+  typeDisplay.innerText = sentence;
 };
 
 RenderNextSentence();
