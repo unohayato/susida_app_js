@@ -1,6 +1,7 @@
 const RANDOM_SENTENCE_URL_API = "https://api.quotable.io/random";
 const typeDisplay = document.getElementById("typeDisplay");
 const typeInput = document.getElementById("typeInput");
+const timer = document.getElementById("timer");
 
 /*inputテキスト入力。正誤判定 */
 typeInput.addEventListener("input", () => {
@@ -51,8 +52,30 @@ async function RenderNextSentence() {
 
   /*テキストボックスの中身を消す */
   typeInput.innerText = "";
+
+  StartTimer();
     
 
+};
+
+let startTime;
+let originTime = 30;
+function StartTimer() {
+  timer.innerText = originTime;
+  startTime = new Date();
+  //console.log(startTime);
+  setInterval(() => {
+    timer.innerText = originTime - getTimerTime(); 
+    if (timer.innerText <= 0) TimeUp();
+  }, 1000);
+};
+
+function getTimerTime() {
+  return Math.floor((new Date() - startTime) / 1000);
+};
+
+function TimeUp() {
+  RenderNextSentence();
 };
 
 RenderNextSentence();
