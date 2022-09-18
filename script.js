@@ -3,16 +3,29 @@ const typeDisplay = document.getElementById("typeDisplay");
 const typeInput = document.getElementById("typeInput");
 const timer = document.getElementById("timer");
 
+const typeSound = new Audio("./audio/typing-sound.mp3");
+const wrongSound = new Audio("./audio/wrong.mp3");
+const correctSound = new Audio("./audio/correct.mp3");
+
+
 /*inputテキスト入力。正誤判定 */
 typeInput.addEventListener("input", () => {
+
+  /*タイピング音をつける */
+  typeSound.play();
+  typeSound.currentTime = 0;
+
   const sentenceArray = typeDisplay.querySelectorAll("span");
   //console.log(sentenceArray);
   const arrayValue = typeInput.value.split("");
   //console.log(arrayValue);
+
+  let correct = true;
   sentenceArray.forEach((characterSpan, index) => {
     if (arrayValue[index] == null) {
       characterSpan.classList.remove("correct");
       characterSpan.classList.remove("incorrect");
+      correct = false;
     }else if(characterSpan.innerText == arrayValue[index]) {
       console.log("correct");
       characterSpan.classList.add("correct");
@@ -20,8 +33,19 @@ typeInput.addEventListener("input", () => {
     }else{
       characterSpan.classList.add("incorrect");
       characterSpan.classList.remove("correct");
+
+      wrongSound.volume = 0.3;
+      wrongSound.play();
+      wrongSound.currentTime = 0;
+      correct = false;
     };
   });
+
+  if (correct == true) {
+    correctSound.play();
+    correctSound.currentTime = 0;
+    RenderNextSentence();
+  };
 });
 
 
@@ -51,7 +75,7 @@ async function RenderNextSentence() {
   });
 
   /*テキストボックスの中身を消す */
-  typeInput.innerText = "";
+  typeInput.value = "";
 
   StartTimer();
     
